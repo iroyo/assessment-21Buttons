@@ -1,28 +1,42 @@
 package com.iroyoraso.assessment.test21buttons.core
 
-import com.iroyoraso.assessment.test21buttons.data.BaseResult
+import com.iroyoraso.assessment.test21buttons.core.entities.GameData
+import com.iroyoraso.assessment.test21buttons.core.entities.GameDataList
 import com.iroyoraso.assessment.test21buttons.data.Game
+import com.iroyoraso.assessment.test21buttons.data.GameListResult
 import com.iroyoraso.assessment.test21buttons.net.ApiService
 import com.iroyoraso.assessment.test21buttons.net.Loader
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
  * Created by iroyo on 2/2/19.
  * Mail: iroyoraso@gmail.com
  */
-class LoadGames(private val api: ApiService) : Action<Int, List<Game>> {
+class LoadGames(private val api: ApiService) : Action<Int, GameDataList> {
 
-    override fun performWith(input: Int, callback: (List<Game>) -> Unit) {
-        api.getGames().enqueue(Loader<BaseResult>(
-            success = {
+    override fun performWith(input: Int, callback: (GameDataList) -> Unit) {
+        api.getGames().enqueue(Loader<GameListResult>(
+                success = {
+                    val size = it.pagination.size
+                    val offset = it.pagination.offset
+                    val games = it.data.map { game -> transform(game) }
+                    callback(GameDataList(size, offset, games))
+                },
+                failure = {
 
-            },
-            failure = {
-
-            }
+                }
         ))
+    }
+
+    private fun transform(game: Game) : GameData {
+        var uriCoverGame : String? = null
+        if (game.assets.coverMedium != null) {
+            uriCoverGame = game.assets.coverMedium.uri
+        }
+        return GameData(
+                game.id,
+                game.names.international,
+                uriCoverGame
+        )
     }
 
 

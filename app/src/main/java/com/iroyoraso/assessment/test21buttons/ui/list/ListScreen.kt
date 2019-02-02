@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import com.iroyoraso.assessment.test21buttons.R
+import com.iroyoraso.assessment.test21buttons.core.entities.GameData
 import com.iroyoraso.assessment.test21buttons.data.Game
 import com.iroyoraso.assessment.test21buttons.net.ApiProvider
 
@@ -30,7 +31,7 @@ class ListScreen : AppCompatActivity() {
         model.retrieveData(result)
     }
 
-    private val result : (List<Game>) -> Unit = {
+    private val result : (List<GameData>) -> Unit = {
         adapter.data(it)
     }
 

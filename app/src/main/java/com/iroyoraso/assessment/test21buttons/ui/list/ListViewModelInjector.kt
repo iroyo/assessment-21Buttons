@@ -1,6 +1,7 @@
 package com.iroyoraso.assessment.test21buttons.ui.list
 
 import com.iroyoraso.assessment.test21buttons.core.Action
+import com.iroyoraso.assessment.test21buttons.core.entities.GameDataList
 import com.iroyoraso.assessment.test21buttons.data.Game
 
 /**
@@ -9,7 +10,7 @@ import com.iroyoraso.assessment.test21buttons.data.Game
  */
 interface ListViewModelInjector {
 
-    fun loadGamesAction() : Action<Int, List<Game>>
+    fun loadGamesAction() : Action<Int, GameDataList>
 
     // HERE WE COULD ADD MORE ACTIONS IF NEEDED
 
