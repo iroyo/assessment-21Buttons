@@ -9,12 +9,12 @@ import com.google.gson.annotations.SerializedName
 data class GameAssets(
     @SerializedName("logo")
     val logo: ImageAsset?,
-    @SerializedName("cover_tiny")
+    @SerializedName("cover-tiny")
     val coverTiny: ImageAsset?,
-    @SerializedName("cover_small")
+    @SerializedName("cover-small")
     val coverSmall: ImageAsset?,
-    @SerializedName("cover_medium")
+    @SerializedName("cover-medium")
     val coverMedium: ImageAsset?,
-    @SerializedName("cover_large")
+    @SerializedName("cover-large")
     val coverLarge: ImageAsset?
 )
