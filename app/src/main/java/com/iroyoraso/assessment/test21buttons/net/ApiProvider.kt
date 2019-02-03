@@ -1,17 +1,16 @@
 package com.iroyoraso.assessment.test21buttons.net
 
 import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.iroyoraso.assessment.test21buttons.BuildConfig
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import java.util.concurrent.TimeUnit
-import com.google.gson.GsonBuilder
-import com.google.gson.Gson
-import java.lang.reflect.Modifier
 import retrofit2.Retrofit
-import android.support.annotation.NonNull
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Modifier
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -38,8 +37,8 @@ class ApiProvider {
             }
 
             val builder = OkHttpClient().newBuilder()
-            builder.connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS);
-            builder.readTimeout(TIMEOUT_READ, TimeUnit.SECONDS);
+            builder.connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
+            builder.readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
             builder.addInterceptor(loggingInterceptor)
             builder.cache(cache)
             return builder.build()

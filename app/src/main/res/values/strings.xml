@@ -1,4 +1,9 @@
 <resources>
 	<string name="app_name">Test 21Buttons</string>
 	<string name="list_game_title">List Games</string>
+	<string name="time">%dh %dm %ds</string>
+	<string name="no_data">No data</string>
+	<string name="primary_time">Primary Time</string>
+	<string name="real_time">Real Time</string>
+	<string name="ingame_time">Ingame Time</string>
 </resources>

@@ -13,7 +13,7 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme"
 		tools:ignore="GoogleAppIndexingWarning">
-		<activity android:name=".ui.detail.InfoDetailScreen">
+		<activity android:name=".ui.detail.screen.InfoDetailScreen">
 		</activity>
 		<activity android:name=".ui.list.screen.ListScreen">
 			<intent-filter>

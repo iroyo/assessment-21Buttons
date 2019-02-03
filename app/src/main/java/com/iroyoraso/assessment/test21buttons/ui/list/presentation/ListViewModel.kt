@@ -7,24 +7,26 @@ import com.iroyoraso.assessment.test21buttons.core.entities.GameData
 class ListViewModel(injector: ListViewModelInjector) : ViewModel() {
 
     // DEPENDENCIES
-    private val action = injector.loadGamesAction()
+    private val loadGames = injector.loadGamesAction()
 
     // STATE
     private var offset = 0
+    private var list = ArrayList<GameData>()
 
     fun initialData(listener: (List<GameData>) -> Unit) {
-        retrieveData(listener)
-    }
-
-    fun retrieveData(listener: (List<GameData>) -> Unit) {
-        action.performWith(offset) {
-            offset = it.offset + it.size
-            listener(it.games)
+        if (list.isNotEmpty()) {
+            listener(list)
+        } else {
+            retrieveData(listener)
         }
     }
 
-    override fun onCleared() {
-        Log.d("IROYO", "HOLA")
-        super.onCleared()
+    fun retrieveData(listener: (List<GameData>) -> Unit) {
+        loadGames.performWith(offset) {
+            offset = it.offset + it.size
+            list.addAll(it.list)
+            listener(it.list)
+        }
     }
+
 }

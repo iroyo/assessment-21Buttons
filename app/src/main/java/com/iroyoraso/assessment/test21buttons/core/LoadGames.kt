@@ -1,9 +1,9 @@
 package com.iroyoraso.assessment.test21buttons.core
 
 import com.iroyoraso.assessment.test21buttons.core.entities.GameData
-import com.iroyoraso.assessment.test21buttons.core.entities.GameDataList
+import com.iroyoraso.assessment.test21buttons.core.entities.ListData
 import com.iroyoraso.assessment.test21buttons.data.Game
-import com.iroyoraso.assessment.test21buttons.data.GameListResult
+import com.iroyoraso.assessment.test21buttons.data.ListResult
 import com.iroyoraso.assessment.test21buttons.net.ApiService
 import com.iroyoraso.assessment.test21buttons.net.Loader
 
@@ -11,15 +11,15 @@ import com.iroyoraso.assessment.test21buttons.net.Loader
  * Created by iroyo on 2/2/19.
  * Mail: iroyoraso@gmail.com
  */
-class LoadGames(private val api: ApiService) : Action<Int, GameDataList> {
+class LoadGames(private val api: ApiService) : Action<Int, ListData<GameData>> {
 
-    override fun performWith(input: Int, callback: (GameDataList) -> Unit) {
-        api.getGames(input).enqueue(Loader<GameListResult>(
+    override fun performWith(input: Int, callback: (ListData<GameData>) -> Unit) {
+        api.getGames(input).enqueue(Loader<ListResult<Game>>(
             success = {
                 val size = it.pagination.size
                 val offset = it.pagination.offset
                 val games = it.data.map { game -> transform(game) }
-                callback(GameDataList(size, offset, games))
+                callback(ListData(size, offset, games))
             },
             failure = {
 
