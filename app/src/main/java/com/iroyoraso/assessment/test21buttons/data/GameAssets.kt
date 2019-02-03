@@ -8,13 +8,13 @@ import com.google.gson.annotations.SerializedName
  */
 data class GameAssets(
     @SerializedName("logo")
-    val logo: ImageAsset?,
+    val logo: ImageAsset,
     @SerializedName("cover-tiny")
-    val coverTiny: ImageAsset?,
+    val coverTiny: ImageAsset,
     @SerializedName("cover-small")
-    val coverSmall: ImageAsset?,
+    val coverSmall: ImageAsset,
     @SerializedName("cover-medium")
-    val coverMedium: ImageAsset?,
+    val coverMedium: ImageAsset,
     @SerializedName("cover-large")
-    val coverLarge: ImageAsset?
+    val coverLarge: ImageAsset
 )

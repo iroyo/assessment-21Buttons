@@ -1,4 +1,4 @@
-package com.iroyoraso.assessment.test21buttons.ui.list;
+package com.iroyoraso.assessment.test21buttons.ui.list.presentation;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
  * Mail: iroyoraso@gmail.com
  */
 @SuppressWarnings("unchecked")
-public class ListViewModelFactory implements ViewModelProvider.Factory {
+public class FactoryViewModel implements ViewModelProvider.Factory {
 
     private final ListViewModelInjector injector;
 
-    public ListViewModelFactory(ListViewModelInjector injector) {
+    public FactoryViewModel(ListViewModelInjector injector) {
         this.injector = injector;
     }
 

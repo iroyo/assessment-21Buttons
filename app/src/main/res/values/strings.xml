@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Test 21Buttons</string>
+	<string name="app_name">Test 21Buttons</string>
+	<string name="list_game_title">List Games</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.iroyoraso.assessment.test21buttons.ui.list
+package com.iroyoraso.assessment.test21buttons.ui.list.presentation
 
 import com.iroyoraso.assessment.test21buttons.core.Action
 import com.iroyoraso.assessment.test21buttons.core.entities.GameDataList

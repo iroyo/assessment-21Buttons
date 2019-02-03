@@ -14,30 +14,25 @@ import com.iroyoraso.assessment.test21buttons.net.Loader
 class LoadGames(private val api: ApiService) : Action<Int, GameDataList> {
 
     override fun performWith(input: Int, callback: (GameDataList) -> Unit) {
-        api.getGames().enqueue(Loader<GameListResult>(
-                success = {
-                    val size = it.pagination.size
-                    val offset = it.pagination.offset
-                    val games = it.data.map { game -> transform(game) }
-                    callback(GameDataList(size, offset, games))
-                },
-                failure = {
+        api.getGames(input).enqueue(Loader<GameListResult>(
+            success = {
+                val size = it.pagination.size
+                val offset = it.pagination.offset
+                val games = it.data.map { game -> transform(game) }
+                callback(GameDataList(size, offset, games))
+            },
+            failure = {
 
-                }
+            }
         ))
     }
 
-    private fun transform(game: Game) : GameData {
-        var uriCoverGame : String? = null
-        if (game.assets.coverMedium != null) {
-            uriCoverGame = game.assets.coverMedium.uri
-        }
-        return GameData(
-                game.id,
-                game.names.international,
-                uriCoverGame
-        )
-    }
-
+    private fun transform(game: Game) = GameData(
+        game.id,
+        game.names.international,
+        game.assets.coverSmall.uri,
+        game.assets.coverMedium.uri,
+        game.assets.coverLarge.uri
+    )
 
 }

@@ -1,9 +1,8 @@
-package com.iroyoraso.assessment.test21buttons.ui.list
+package com.iroyoraso.assessment.test21buttons.ui.list.presentation
 
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import com.iroyoraso.assessment.test21buttons.core.entities.GameData
-import com.iroyoraso.assessment.test21buttons.data.Game
 
 class ListViewModel(injector: ListViewModelInjector) : ViewModel() {
 
@@ -11,7 +10,11 @@ class ListViewModel(injector: ListViewModelInjector) : ViewModel() {
     private val action = injector.loadGamesAction()
 
     // STATE
-    private var offset = 0;
+    private var offset = 0
+
+    fun initialData(listener: (List<GameData>) -> Unit) {
+        retrieveData(listener)
+    }
 
     fun retrieveData(listener: (List<GameData>) -> Unit) {
         action.performWith(offset) {

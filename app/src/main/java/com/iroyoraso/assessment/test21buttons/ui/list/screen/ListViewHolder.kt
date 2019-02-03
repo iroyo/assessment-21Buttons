@@ -1,4 +1,4 @@
-package com.iroyoraso.assessment.test21buttons.ui.list
+package com.iroyoraso.assessment.test21buttons.ui.list.screen
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

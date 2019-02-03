@@ -7,5 +7,7 @@ package com.iroyoraso.assessment.test21buttons.core.entities
 data class GameData(
         val id: String,
         val name: String,
-        val cover: String?
+        val coverSmall: String,
+        val coverMedium: String,
+        val coverLarge: String
 )
