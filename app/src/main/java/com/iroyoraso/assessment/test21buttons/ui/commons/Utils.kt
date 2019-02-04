@@ -10,8 +10,10 @@ import com.squareup.picasso.Picasso
  */
 
 fun ImageView.setImageFromNetwork(value: String?) {
-    if (value != null) {
+    if (!value.isNullOrEmpty()) {
         Picasso.get().load(value).into(this)
+    } else {
+        setImageResource(0);
     }
 }
 
