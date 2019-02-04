@@ -17,13 +17,10 @@ class Loader<T>(private val success: (T) -> Unit, private val failure: (Throwabl
     override fun onResponse(call: Call<T>, response: Response<T>) {
         if (response.isSuccessful) {
             val body = response.body()
-            if (body != null) {
-                success(body)
-            }
+            if (body != null) success(body)
         } else {
-
+            failure(Exception())
         }
-
     }
 
 }

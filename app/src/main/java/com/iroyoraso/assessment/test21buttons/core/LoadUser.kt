@@ -12,14 +12,10 @@ import com.iroyoraso.assessment.test21buttons.net.Loader
  */
 class LoadUser(private val api: ApiService) : Action<String, UserData> {
 
-    override fun performWith(input: String, callback: (UserData) -> Unit) {
+    override fun performWith(input: String, success: (UserData) -> Unit, failure: (Throwable) -> Unit) {
        api.getUser(input).enqueue(Loader<UserResult>(
-           success = {
-               callback(transform(it.data))
-           },
-           failure = {
-
-           }
+           success = { success(transform(it.data)) },
+           failure = { failure(it) }
        ))
     }
 
@@ -27,8 +23,8 @@ class LoadUser(private val api: ApiService) : Action<String, UserData> {
         return UserData(
             user.id,
             user.names.international,
-            user.location.region?.names?.international,
-            user.location.country?.names?.international
+            user.location?.region?.names?.international,
+            user.location?.country?.names?.international
         )
     }
 

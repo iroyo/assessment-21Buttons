@@ -7,5 +7,5 @@ package com.iroyoraso.assessment.test21buttons.data
 data class User(
     val id: String,
     val names: Name,
-    val location: Location
+    val location: Location?
 )

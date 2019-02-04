@@ -12,6 +12,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.Window
+import android.widget.Toast
 import com.iroyoraso.assessment.test21buttons.R
 import com.iroyoraso.assessment.test21buttons.core.entities.GameData
 import com.iroyoraso.assessment.test21buttons.net.ApiProvider
@@ -40,11 +41,16 @@ class ListScreen : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val imageView = view.findViewById<View>(R.id.imageCover)
             val p1 = Pair.create(imageView, data.id)
+
             // ADD NavigationBar TO THE TRANSITION TO AVOID OVERLAY WITH THE PARTIALLY VISIBLE ITEMS
             val navigationBar = findViewById<View>(android.R.id.navigationBarBackground)
             val p2 = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME)
 
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, p1, p2)
+            val options = if (navigationBar == null) {
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, p1)
+            } else {
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, p1, p2)
+            }
             startActivity(intent, options.toBundle())
         } else {
             startActivity(intent)
@@ -65,7 +71,7 @@ class ListScreen : AppCompatActivity() {
         val service = ApiProvider.get(this)
         val factory = FactoryViewModel(ListViewModelDependencies(service))
         model = ViewModelProviders.of(this, factory).get(ListViewModel::class.java)
-        model.initialData(onInitialData)
+        model.initialData(onInitialData, onError)
     }
 
     // SETUP
@@ -83,7 +89,7 @@ class ListScreen : AppCompatActivity() {
     private fun loadMore() {
         loadingProgress.visibility = View.VISIBLE
         loadingProgress.show()
-        model.retrieveData(onNewData)
+        model.retrieveData(onNewData, onError)
     }
 
 
@@ -97,6 +103,11 @@ class ListScreen : AppCompatActivity() {
     private val onNewData: (List<GameData>) -> Unit = {
         loadingProgress.hide()
         adapter.data(it)
+    }
+
+    private val onError: () -> Unit = {
+        mainProgress.hide()
+        Toast.makeText(this, getString(R.string.unexpected_error), Toast.LENGTH_LONG).show()
     }
 
 }

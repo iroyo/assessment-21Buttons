@@ -14,16 +14,16 @@ import com.iroyoraso.assessment.test21buttons.net.Loader
  */
 class LoadRuns(private val api: ApiService) : Action<String, ListData<RunData>> {
 
-    override fun performWith(input: String, callback: (ListData<RunData>) -> Unit) {
+    override fun performWith(input: String, success: (ListData<RunData>) -> Unit, failure: (Throwable) -> Unit) {
         api.getRuns(input).enqueue(Loader<ListResult<Run>>(
             success = {
                 val size = it.pagination.size
                 val offset = it.pagination.offset
                 val runs = it.data.map { run -> transform(run) }
-                callback(ListData(size, offset, runs))
+                success(ListData(size, offset, runs))
             },
             failure = {
-
+                failure(it)
             }
         ))
     }
@@ -52,13 +52,13 @@ class LoadRuns(private val api: ApiService) : Action<String, ListData<RunData>> 
     }
 
     private fun transform(time: Int) : TimeStats? {
-        if (time == 0) {
-            return null
+        return if (time == 0) {
+            null
         } else {
             val hours = time / 3600
             val minutes = (time % 3600) / 60
             val seconds = time % 60
-            return TimeStats(hours, minutes, seconds)
+            TimeStats(hours, minutes, seconds)
         }
     }
 }

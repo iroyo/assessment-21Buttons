@@ -20,6 +20,7 @@ import java.lang.Exception
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.widget.ContentLoadingProgressBar
+import android.widget.Toast
 import com.iroyoraso.assessment.test21buttons.core.entities.UserData
 import com.iroyoraso.assessment.test21buttons.ui.commons.setImageFromNetwork
 
@@ -74,7 +75,7 @@ class InfoDetailScreen : AppCompatActivity() {
         val service = ApiProvider.get(this)
         val factory = FactoryViewModel(InfoDetailViewModelDependencies(service))
         model = ViewModelProviders.of(this, factory).get(InfoDetailViewModel::class.java)
-        model.retrieveRuns(gameId, onRunResult)
+        model.retrieveRuns(gameId, onRunResult, onError)
     }
 
     private fun setCoverHero(gameId: String) {
@@ -108,7 +109,7 @@ class InfoDetailScreen : AppCompatActivity() {
 
         // GET DATA FROM PLAYER
         if (it.idPlayer != null) {
-            model.getUser(it.idPlayer, onUserResult)
+            model.getUser(it.idPlayer, onUserResult, onError)
         }
 
         assignTime(textRealTime, it.realTime)
@@ -134,6 +135,10 @@ class InfoDetailScreen : AppCompatActivity() {
             it.country != null -> textUserCountry.text = it.country
             else -> textUserCountry.text = getString(R.string.no_data)
         }
+    }
+
+    private val onError: () -> Unit = {
+        Toast.makeText(this, getString(R.string.unexpected_error), Toast.LENGTH_LONG).show()
     }
 
 }

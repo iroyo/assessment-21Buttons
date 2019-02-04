@@ -1,6 +1,5 @@
 package com.iroyoraso.assessment.test21buttons.ui.detail.presentation
 
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.iroyoraso.assessment.test21buttons.core.entities.RunData
 import com.iroyoraso.assessment.test21buttons.core.entities.UserData
@@ -17,19 +16,35 @@ class InfoDetailViewModel(injector: InfoDetailViewModelInjector) : ViewModel() {
     // STATE
     private var list = ArrayList<RunData>()
 
-    fun retrieveRuns(gameId: String, listener: (RunData) -> Unit) {
+    fun retrieveRuns(
+        gameId: String,
+        onSuccess: (RunData) -> Unit,
+        onError: () -> Unit
+    ) {
         if (list.isNotEmpty()) {
-            listener(list[0])
+            onSuccess(list[0])
         } else {
-            loadRuns.performWith(gameId) {
-                list.addAll(it.list)
-                listener(list[0])
-            }
+            loadRuns.performWith(gameId,
+                success = {
+                    list.addAll(it.list)
+                    onSuccess(list[0])
+                },
+                failure = {
+                    // HERE WE SHOULD HANDLE EACH EXCEPTION
+                    onError()
+                }
+            )
         }
     }
 
-    fun getUser(userId: String, listener: (UserData) -> Unit) {
-        loadUser.performWith(userId) { listener(it) }
+    fun getUser(
+        userId: String,
+        onSuccess: (UserData) -> Unit,
+        onError: () -> Unit
+    ) {
+        loadUser.performWith(userId,
+            success = { onSuccess(it) },
+            failure = { onError() })
     }
 
 }

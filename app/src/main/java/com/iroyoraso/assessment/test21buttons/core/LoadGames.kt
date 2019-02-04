@@ -13,16 +13,16 @@ import com.iroyoraso.assessment.test21buttons.net.Loader
  */
 class LoadGames(private val api: ApiService) : Action<Int, ListData<GameData>> {
 
-    override fun performWith(input: Int, callback: (ListData<GameData>) -> Unit) {
+    override fun performWith(input: Int, success: (ListData<GameData>) -> Unit, failure: (Throwable) -> Unit) {
         api.getGames(input).enqueue(Loader<ListResult<Game>>(
             success = {
                 val size = it.pagination.size
                 val offset = it.pagination.offset
                 val games = it.data.map { game -> transform(game) }
-                callback(ListData(size, offset, games))
+                success(ListData(size, offset, games))
             },
             failure = {
-
+                failure(it)
             }
         ))
     }

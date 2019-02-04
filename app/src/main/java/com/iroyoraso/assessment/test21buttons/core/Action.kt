@@ -6,6 +6,10 @@ package com.iroyoraso.assessment.test21buttons.core
  */
 interface Action<IN, OUT> {
 
-    fun performWith(input: IN, callback: (OUT) -> Unit)
+    fun performWith(
+        input: IN,
+        success: (OUT) -> Unit,
+        failure: (Throwable) -> Unit
+    )
 
 }
